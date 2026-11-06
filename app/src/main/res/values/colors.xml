@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bg">#0F1115</color>
-    <color name="surface">#16181D</color>
-    <color name="key">#23262E</color>
-    <color name="key_light">#2E323C</color>
-    <color name="accent">#00C9A7</color>
-    <color name="text_primary">#F5F7FA</color>
-    <color name="text_secondary">#9AA3AF</color>
-    <color name="danger">#FF6B6B</color>
+    <color name="bg">#FFFFFF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_alt">#F7F8FA</color>
+    <color name="key">#F4F5F7</color>
+    <color name="accent">#EB0029</color>
+    <color name="accent_soft">#FDECEE</color>
+    <color name="text_primary">#1A1A1A</color>
+    <color name="text_secondary">#8A8F98</color>
+    <color name="divider">#EDEEF0</color>
+    <color name="white">#FFFFFF</color>
+    <color name="avatar_text">#EB0029</color>
 </resources>

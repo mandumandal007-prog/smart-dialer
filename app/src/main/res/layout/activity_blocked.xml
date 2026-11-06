@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="12dp"
+        android:paddingBottom="6dp"
         android:text="Blocked numbers"
         android:textColor="@color/text_primary"
         android:textSize="22sp"
@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="12dp"
+        android:paddingBottom="14dp"
         android:text="Calls from these numbers are rejected automatically by the call screening service."
         android:textColor="@color/text_secondary"
         android:textSize="13sp" />
@@ -31,13 +31,13 @@
         <EditText
             android:id="@+id/blocked_input"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="46dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_input"
+            android:background="@drawable/bg_search"
             android:hint="Add a number"
             android:inputType="phone"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
             android:textColor="@color/text_primary"
             android:textColorHint="@color/text_secondary"
             android:textSize="15sp" />
@@ -45,12 +45,12 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/blocked_add"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="46dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/bg_call"
             android:stateListAnimator="@null"
             android:text="Block"
-            android:textColor="#00110E"
+            android:textColor="@color/white"
             android:textStyle="bold" />
     </LinearLayout>
 

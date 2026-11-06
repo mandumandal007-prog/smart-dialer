@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -77,8 +78,11 @@ class RecentsFragment : Fragment() {
 
     private fun setFilter(type: Int) {
         filterType = type
+        val off = ContextCompat.getColor(requireContext(), R.color.text_primary)
+        val on = ContextCompat.getColor(requireContext(), R.color.white)
         for (button in filterButtons) {
             button.setBackgroundResource(R.drawable.bg_chip_off)
+            button.setTextColor(off)
         }
         val index = when (type) {
             0 -> 0
@@ -87,6 +91,7 @@ class RecentsFragment : Fragment() {
             else -> 3
         }
         filterButtons[index].setBackgroundResource(R.drawable.bg_chip_on)
+        filterButtons[index].setTextColor(on)
         render()
     }
 

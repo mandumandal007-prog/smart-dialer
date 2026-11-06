@@ -1,17 +1,22 @@
 package com.smartdialer.app
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.View
+import android.widget.PopupMenu
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.tabs.TabLayout
 import com.smartdialer.app.contacts.ContactsFragment
-import com.smartdialer.app.dialpad.DialpadFragment
+import com.smartdialer.app.dialpad.DialpadActivity
 import com.smartdialer.app.favorites.FavoritesFragment
 import com.smartdialer.app.recents.RecentsFragment
+import com.smartdialer.app.spam.BlockedNumbersActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,40 +27,73 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
-        bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_keypad -> {
-                    open(DialpadFragment())
-                    true
-                }
-                R.id.nav_recents -> {
-                    open(RecentsFragment())
-                    true
-                }
-                R.id.nav_contacts -> {
-                    open(ContactsFragment())
-                    true
-                }
-                R.id.nav_favorites -> {
-                    open(FavoritesFragment())
-                    true
-                }
-                else -> false
+        val tabs = findViewById<TabLayout>(R.id.tabs)
+        tabs.addTab(tabs.newTab().setText("Contacts"))
+        tabs.addTab(tabs.newTab().setText("Favorites"))
+        tabs.addTab(tabs.newTab().setText("Recents"))
+
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                open(tab.position)
             }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+
+        findViewById<FloatingActionButton>(R.id.fab_dial).setOnClickListener {
+            startActivity(Intent(this, DialpadActivity::class.java))
         }
 
+        findViewById<View>(R.id.btn_menu).setOnClickListener { anchor -> showMenu(anchor) }
+
         if (savedInstanceState == null) {
-            bottomNav.selectedItemId = R.id.nav_keypad
+            tabs.getTabAt(0)?.select()
         }
 
         askPermissions()
+        handleDialIntent(intent)
     }
 
-    private fun open(fragment: Fragment) {
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        handleDialIntent(intent)
+    }
+
+    private fun handleDialIntent(intent: Intent?) {
+        val data = intent?.data ?: return
+        if (data.scheme != "tel") return
+        val number = data.schemeSpecificPart ?: return
+        if (number.isEmpty()) return
+        val dialIntent = Intent(this, DialpadActivity::class.java)
+        dialIntent.putExtra(DialpadActivity.EXTRA_NUMBER, number)
+        startActivity(dialIntent)
+    }
+
+    private fun open(position: Int) {
+        val fragment: Fragment = when (position) {
+            0 -> ContactsFragment()
+            1 -> FavoritesFragment()
+            else -> RecentsFragment()
+        }
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
             .commit()
+    }
+
+    private fun showMenu(anchor: View) {
+        val popup = PopupMenu(this, anchor)
+        popup.menu.add(0, 1, 0, "Blocked numbers")
+        popup.setOnMenuItemClickListener { item ->
+            if (item.itemId == 1) {
+                startActivity(Intent(this, BlockedNumbersActivity::class.java))
+                true
+            } else {
+                false
+            }
+        }
+        popup.show()
     }
 
     private fun askPermissions() {

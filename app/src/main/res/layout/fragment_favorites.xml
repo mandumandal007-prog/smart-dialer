@@ -3,23 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="12dp"
     android:background="@color/bg">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:text="Favorites"
-        android:textColor="@color/text_primary"
-        android:textSize="22sp"
-        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favorites_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:clipToPadding="false" />
 
     <TextView
         android:id="@+id/favorites_empty"
@@ -29,14 +23,4 @@
         android:gravity="center"
         android:text="Star a contact to see it here"
         android:textColor="@color/text_secondary" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/manage_blocked"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@drawable/bg_key"
-        android:stateListAnimator="@null"
-        android:text="Blocked numbers"
-        android:textColor="@color/text_primary"
-        android:textSize="15sp" />
 </LinearLayout>
